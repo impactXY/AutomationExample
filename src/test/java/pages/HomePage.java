@@ -1,29 +1,20 @@
 package pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.IExpectedExceptionsHolder;
 
-import java.time.Duration;
-
-public class HomePage {
-    private final WebDriver driver;
-    private final WebDriverWait wait;
-
-    private final By acceptButton = By.cssSelector("button.fc-cta.consent");
+public class HomePage extends BasePage {
     private final By signupLogin = By.cssSelector("a[href='/login']");
+    private final By loggedInAs = By.xpath("//a[contains(text(), 'Logged in as')]");
+    private final By deleteAccountLink = By.cssSelector("a[href='/delete_account']");
+    private final By logoutAccountLink = By.cssSelector("a[href='/logout']");
 
     public HomePage(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        super(driver);
     }
 
     public HomePage open(String url) {
         driver.get(url);
-        acceptButtonIfExists();
         return this;
     }
 
@@ -31,17 +22,24 @@ public class HomePage {
         return driver.getTitle();
     }
 
-    public void clickSignupLogin() {
-        wait.until(ExpectedConditions.elementToBeClickable(signupLogin)).click();
+    public SignupLoginPage goToLogin() {
+        click(signupLogin);
+        return new SignupLoginPage(driver);
     }
 
-    private void acceptButtonIfExists() {
-        try {
-            new WebDriverWait(driver, Duration.ofSeconds(3))
-                    .until(ExpectedConditions.elementToBeClickable(acceptButton))
-                    .click();
-        } catch (TimeoutException ignored) {
+    public String getLoggedInText() {
 
-        }
+        return getText(loggedInAs);
+    }
+
+    public SignupLoginPage logoutAccount() {
+
+        click(logoutAccountLink);
+        return new SignupLoginPage(driver);
+    }
+
+    public AccountDeletedPage deleteAccount() {
+        click(deleteAccountLink);
+        return new AccountDeletedPage(driver);
     }
 }
