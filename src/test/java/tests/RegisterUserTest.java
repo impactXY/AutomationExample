@@ -14,7 +14,7 @@ public class RegisterUserTest extends BaseTest {
         HomePage home = new HomePage(getDriver()).open(BASE_URL);
 
         SignupLoginPage singupLogin = home.goToLogin();
-        Assert.assertTrue(singupLogin.isNewUserLoginVisible(), "'New User Signup!' not visible");
+        Assert.assertTrue(singupLogin.isNewUserSignupVisible(), "'New User Signup!' not visible");
 
         AccountInfoPage accountInfo = singupLogin.signup(name, email);
         Assert.assertTrue(accountInfo.isAccountInfoVisible(), "Account info form not visible");
