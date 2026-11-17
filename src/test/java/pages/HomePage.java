@@ -9,6 +9,7 @@ public class HomePage extends BasePage {
     private final By logoutAccountLink = By.cssSelector("a[href='/logout']");
     private final By contactUsLink = By.cssSelector("a[href='/contact_us']");
     private final By productsLink = By.cssSelector("a[href='/products']");
+    private final By cartLink = By.cssSelector("header a[href='/view_cart']");
 
     private final By loggedInAs = By.xpath("//a[contains(text(), 'Logged in as')]");
 
